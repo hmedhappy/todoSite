@@ -1,13 +1,13 @@
 {
-  "name": "try",
+  "name": "ahmed",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple Todo List Project",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "author": "",
+  "author": "hmedhappy",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -18,5 +18,16 @@
     "mysql": "^2.18.1",
     "nodemon": "^2.0.3",
     "path": "^0.12.7"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hmedhappy/todoSite.git"
+  },
+  "keywords": [
+    "karirinkute@0"
+  ],
+  "bugs": {
+    "url": "https://github.com/hmedhappy/todoSite/issues"
+  },
+  "homepage": "https://github.com/hmedhappy/todoSite#readme"
 }
