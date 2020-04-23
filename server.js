@@ -29,6 +29,7 @@ app.get('/',(req,res)=>{
    res.render('login');
 })
 
+
 //undate a todo 
 app.get('/testtodo', (req, res) => {
     let username = 2 ;
@@ -53,6 +54,8 @@ app.get('/testtodo', (req, res) => {
 
     
 });
+
+
 
 app.post('/auth', function (req, res) {
     let username = req.body.username;

@@ -65,8 +65,7 @@
           <div style="text-align: center;" class="col"> 
               <div  style="float: right;">
                   <h3>
-                    Bonjour <%= obj.name%>
-                    Votre id = <%= iduser %>
+                     Bonjour >
                   </h3>
               </div>
           </div>
@@ -95,20 +94,19 @@
                           </tr>
                       </thead>
                       <tbody>
-                        <%  for (var i = 0; i < obj.todolist.length; i++) { %>
-                          <% if (obj.todolist[i].status == true) { %>
-                             <tr>
-                                 <td><%= obj.todolist[i].id %></td>
-                                 <td ><%= obj.todolist[i].contenu %></td>
-                                 <td > <%= new Date %> </td>
-                                 <td> <% var d = i %> 
-                                 <button onclick="faire('<%= d %>')" class="btn btn-success">Terminer</button>                                     
-                                     <button type="button" class="btn btn-warning mx-3" data-toggle="modal"data-target="#exampleModal" data-whatever="@mdo">Modifier </button>
-                                     <button class="btn btn-danger">Supprimer</button>
-                                 </td>
-                             </tr>
-                           <%} %>
-                         <%} %>
+                      
+                              <tr>
+                                  <td>id %></td>
+                                  <td >contenu %></td>
+                                  <td >date</td>
+                                  <td>
+                                  <button  class="btn btn-success">Terminer</button>                                     
+                                      <button type="button" class="btn btn-warning mx-3" data-toggle="modal"data-target="#exampleModal" data-whatever="@mdo">Modifier </button>
+                                      <button class="btn btn-danger">Supprimer</button>
+                                  </td>
+                              </tr>
+                            
+                          
                       </tbody>
                   </table>
                  
@@ -149,20 +147,19 @@
                       </tr>
                   </thead>
                   <tbody>
-                    <%  for (var i = 0; i < obj.todolist.length; i++) { %>
-                      <% if (obj.todolist[i].status == false) { %>
-                           <tr>
-                               <td><%= obj.todolist[i].id %></td>
-                               <td><%= obj.todolist[i].contenu %></td>
-                               <td> 13/09/1999 </td>
-                               <td> <button class="btn btn-success">Terminer</button>
-                                   <button type="button" class="btn btn-warning mx-3" data-toggle="modal" data-target="#exampleModal"
-                                       data-whatever="@mdo">Modifier </button>
-                                   <button class="btn btn-danger">Supprimer</button>
-                               </td>
-                           </tr>
-                     <%} %>                           
-                   <%} %>
+                     
+                       
+                              <tr>
+                                  <td>id></td>
+                                  <td>contenu </td>
+                                  <td> 13/09/1999 </td>
+                                  <td> <button class="btn btn-success">Terminer</button>
+                                      <button type="button" class="btn btn-warning mx-3" data-toggle="modal" data-target="#exampleModal"
+                                          data-whatever="@mdo">Modifier </button>
+                                      <button class="btn btn-danger">Supprimer</button>
+                                  </td>
+                              </tr>
+                        
                   </tbody>
               </table>
               </div>

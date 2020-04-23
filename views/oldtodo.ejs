@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+    <div style=" top :50% ; background-color: #191919;">
+        <div class="f" style="top :50% "></div>
+        <img src="../assests/bg.png" style="height: 20%; width :30%">
+        <img src="../assests/logo2.png" style="position: absolute ; top:-3%; left: 42%;HEIGHT: 234px;">
+        <img src="../assests/bg.png" style="height: 20%; width :30% ; float:right;transform:rotateY(180deg);">
+    </div>
+    <div class="container" style="padding-left: 0px; ">
+        <div style="text-align: center;" class="col"> 
+            <div  style="float: right;">
+                <h3>
+                   Bonjour <%= obj.name%>
+                   Votre id = <%= iduser %>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+                <h2>
+                    Todo List
+                </h2>
+            </div>
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-info my-2 my-sm-0" data-toggle="modal" data-target="#exampleModal"
+                    data-whatever="@mdo">Ajouter ToDo</button>
+                <button class="btn btn-secondary my-2 my-sm-0" (click)="delete()"
+                    style=" margin-left: 1000px ; border-radius: 200px; ">Clear All</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <table class="table">
+                    <thead >
+                        <tr>
+                            <th >id</th>
+                            <th >Description</th>
+                            <th >Date d'ajout</th>
+                            <th >Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                     <%  for (var i = 0; i < obj.todolist.length; i++) { %>
+                         <% if (obj.todolist[i].status == true) { %>
+                            <tr>
+                                <td><%= obj.todolist[i].id %></td>
+                                <td ><%= obj.todolist[i].contenu %></td>
+                                <td > <%= new Date %> </td>
+                                <td> <% var d = i %> 
+                                <button onclick="faire('<%= d %>')" class="btn btn-success">Terminer</button>                                     
+                                    <button type="button" class="btn btn-warning mx-3" data-toggle="modal"data-target="#exampleModal" data-whatever="@mdo">Modifier </button>
+                                    <button class="btn btn-danger">Supprimer</button>
+                                </td>
+                            </tr>
+                          <%} %>
+                        <%} %>
+                    </tbody>
+                </table>
+               
+            </div>
+        </div>
+        <hr>
+        
+            
+               
+            
+       
+    
+        <div class="row">
+            <div class="col">
+                <h2>
+                    DoneList
+                </h2>
+            </div>
+    
+        </div>
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-secondary" (click)="deletedone()"
+                    style=" margin-left: 1000px ; border-radius: 200px ;">Clear All</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="row" class="alert alert-warning">Aucun Done-ToDo Disponible </div>
+    
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Description</th>
+                        <th>Date d'ajout</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%  for (var i = 0; i < obj.todolist.length; i++) { %>
+                       <% if (obj.todolist[i].status == false) { %>
+                            <tr>
+                                <td><%= obj.todolist[i].id %></td>
+                                <td><%= obj.todolist[i].contenu %></td>
+                                <td> 13/09/1999 </td>
+                                <td> <button class="btn btn-success">Terminer</button>
+                                    <button type="button" class="btn btn-warning mx-3" data-toggle="modal" data-target="#exampleModal"
+                                        data-whatever="@mdo">Modifier </button>
+                                    <button class="btn btn-danger">Supprimer</button>
+                                </td>
+                            </tr>
+                      <%} %>                           
+                    <%} %>
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+    <div style=" top :50% ; background-color: #191919;">
+        <div class="f" style="top :50% "></div>
+        <img src="../assests/cloud.png" style="height: 20%; width :50% ;  transform: rotate(180deg);">
+        <img src="../assests/cloud.png" style="height: 20%; width :50% ; float:right;transform:rotateY(180deg);  transform: rotate(180deg);">
+    </div>
+   
+    
+    
+    <!--  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Open
+        modal </button>-->
+    
+    <!-- <app-todo-add [inpu]=inpu></app-todo-add>
+     -->
+    <div class="modal fade" id="exampleModall" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Change ToDo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="todoForm" (ngSubmit)="changetodo(todo)">
+    
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">The ToDo is:</label>
+                            <input type="text" class="form-control" formControlName="todochanged">
+                        </div>
+    
+    
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button class="btn btn-primary" type="submit">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Adding ToDo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="todoForm" (ngSubmit)="addtodo()">
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">The ToDo is:</label>
+                            <input name="todo" id="todo" type="text" class="form-control" formControlName="todo">
+                        </div>
+    
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info" value="Register" formControlName="todo">Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
