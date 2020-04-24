@@ -1,55 +1,32 @@
-
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title>Login Form Tutorial</title>
-		<style>
-		.login-form {
-			width: 300px;
-			margin: 0 auto;
-			font-family: Tahoma, Geneva, sans-serif;
-		}
-		.login-form h1 {
-			text-align: center;
-			color: #4d4d4d;
-			font-size: 24px;
-			padding: 20px 0 20px 0;
-		}
-		.login-form input[type="password"],
-		.login-form input[type="text"] {
-			width: 100%;
-			padding: 15px;
-			border: 1px solid #dddddd;
-			margin-bottom: 15px;
-			box-sizing:border-box;
-		}
-		.login-form input[type="submit"],[value="Sign-Up"] {
-			width: 50%;
-			padding: 15px;
-			background-color: #535b63;
-			border: 1px;
-			box-sizing: border-box;
-			cursor: pointer;
-			font-weight: bold;
-			color: #ffffff;
-            align-items: center;;
-		}
-		</style>
-	</head>
-	<body>
-		<div class="login-form">
-			<h1>Login Form</h1>
-			<form action="register" method="POST">
-				<input class="name" type="text" name="name" placeholder="Name" required>
-				<input class="username" type="text" name="username" placeholder="Username" required>
-				<input class="password" type="password" name="password" placeholder="Password" maxlength="15" required>
-				<input class="date" type="date" name="date" placeholder="Date-de-Naissance" required>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Cloudnote-Register</title>
+    <link rel="stylesheet" href="logintest.css">
+  </head>
+  <body>
+  <img src="loginback.jpg" alt="Kiwi standing on oval" style="height: 100%;width: 100%;position: absolute;">
 
-				<input type="submit">
-			</form>
-			<a href="http://localhost:2000/sign">Sign-Up</a>
-		</div>
-				<script src="./script.js"></script>
-	</body>
+    <div style=" top :50% ; background-color: #2f89fc;">
+      <div class="f" style="top :50% "></div>
+        <img src="../assests/logo2.png" style="position: absolute ;top: -3%;left: 45%;HEIGHT: 160px;">
+  </div>
+  
+
+  <h1>Login</h1>
+<form class="box" action="register" method="POST">
+  <input class="name" type="text" name="name" placeholder="Name" required>
+  <input class="username" type="text" name="username" placeholder="Username" required>
+  <input  class="password" type="password" name="password" placeholder="Password" maxlength="15" required>
+  <input class="date" type="date" name="date" placeholder="Date-de-Naissance" required>
+  <input type="submit" >
+  <a href="http://localhost:2000">Login</a>
+
+
+</form>
+        
+
+
+  </body>
 </html>
