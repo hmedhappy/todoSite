@@ -217,7 +217,7 @@
                       </button>
                   </div>
                   <div class="modal-body">
-                      <form [formGroup]="todoForm" (ngSubmit)="addtodo()">
+                      <form action="/addtodo?id=<%=iduser%>" method="post">
                           <div class="form-group">
                               <label for="message-text" class="col-form-label">The ToDo is:</label>
                               <input name="todo" id="todo" type="text" class="form-control" formControlName="todo">
@@ -225,7 +225,7 @@
       
                           <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <button type="submit" class="btn btn-info" value="Register" formControlName="todo">Save
+                              <button type="submit" class="btn btn-info" value="Register">Save
                               </button>
                           </div>
                       </form>

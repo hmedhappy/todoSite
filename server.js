@@ -3,6 +3,7 @@ const mysql = require('mysql');
 const path = require('path') ;
 const app = express();
 var bodyParser = require('body-parser');
+var request = require('request');
 
 //view engine setup // var bodyParser = require('body-parser');
 app.use(express.static(path.join(__dirname, 'public')));
@@ -24,10 +25,13 @@ conn.connect(function (err) {
     if (err) throw err;
     console.log("Connected to Database");
 });
-
+//router
 app.get('/',(req,res)=>{
    res.render('login');
 })
+app.get('/sign',(req,res)=>{
+    res.render('sign');
+});
 
 
 //undate a todo 
@@ -55,8 +59,43 @@ app.get('/testtodo', (req, res) => {
     
 });
 
+//Adding Todo 
+app.post('/addtodo/',(req,res,next)=>{
+    userid = req.query.id;
+    if (req.query.id ){
+        
+        conn.query('SELECT user FROM todouser WHERE id= ?', [userid], function (error, results, fields) {
+            if(error)throw error ;
+            console.log(results) ;
+            obj = JSON.parse(results[0].user);
+
+            let newtodo = {
+                "id":obj.todolist.length,
+                "contenu":req.body.todo,
+                "status":true 
+            }
+            copyoftodolist = obj.todolist ;
+            copyoftodolist.push(newtodo);
+            obj.todolist= copyoftodolist ;
+            sendtodo =[JSON.stringify(obj)];
+
+            conn.query('UPDATE todouser SET user=? WHERE id= ?', [sendtodo,userid]);
+
+            
+        
+            iduser = userid;
+             res.render('todo',{obj,iduser}) ;
+        });
+    }
+    
+        
+ });
+ 
 
 
+
+
+//Authentification
 app.post('/auth', function (req, res) {
     let username = req.body.username;
     let password = req.body.password;
@@ -78,9 +117,7 @@ app.post('/auth', function (req, res) {
     }
 });
 
-app.get('/sign',(req,res)=>{
-    res.render('sign');
-});
+
 
 app.post('/register', function (req, res) {
     let username = req.body.username;
