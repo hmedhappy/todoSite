@@ -122,6 +122,39 @@ app.get('/deletetodo/',(req,res,next)=>{
         
  });
 
+ //Done Todo 
+app.get('/donetodo/',(req,res,next)=>{
+    userid = req.query.id;
+    todoid = req.query.idtodo;
+    if (req.query.id ){
+        
+        conn.query('SELECT user FROM todouser WHERE id= ?', [userid], function (error, results, fields) {
+            if(error)throw error ;
+            console.log(results) ;
+            obj = JSON.parse(results[0].user);
+            
+            copyoftodolist = obj.todolist ;
+            copyoftodolist.forEach(element => {
+                if (element.id == todoid) {
+                    element.status = false ;
+                }
+            });
+            obj.todolist= copyoftodolist ;
+            sendtodo =[JSON.stringify(obj)];
+
+            conn.query('UPDATE todouser SET user=? WHERE id= ?', [sendtodo,userid]);
+
+            console.log(sendtodo) ;
+
+        
+            iduser = userid;
+             res.render('todo',{obj,iduser}) ;
+        });
+    }
+    
+        
+ });
+
  
 //Authentification
 app.post('/auth', function (req, res) {

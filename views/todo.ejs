@@ -103,8 +103,8 @@
                                  <td ><%= todo.contenu %></td>
                                  <td > <%= new Date %> </td>
                                  <td> <% var d = i %> 
-                                 <button onclick="faire('<%= d %>')" class="btn btn-success">Terminer</button>                                     
-                                     <button type="button" class="btn btn-warning mx-3" data-toggle="modal"data-target="#exampleModall" data-whatever="@mdo" >Modifierr </button>
+                                 <a class="btn btn-success"method="post" href="/donetodo?id=<%=iduser%>&idtodo=<%=todo.id %>" >Terminer</a>                                     
+                                     <a  class="btn btn-warning mx-3"   data-toggle="modal"data-target="#exampleModall" data-whatever="@mdo" >Modifierrr </a>
                                      <a class="btn btn-danger" method="post" href="/deletetodo?id=<%=iduser%>&idtodo=<%=todo.id %>">Supprimer</a> <!-- deleting a todo  -->
                                  </td>
                              </tr>
@@ -119,9 +119,6 @@
           <hr>
           
               
-          
-              
-         
       
           <div class="row">
               <div class="col">
