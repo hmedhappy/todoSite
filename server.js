@@ -93,6 +93,8 @@ app.post('/addtodo/',(req,res,next)=>{
         
  });
 
+ 
+
 //Deleting Todo 
 app.get('/deletetodo/',(req,res,next)=>{
     userid = req.query.id;
@@ -116,6 +118,39 @@ app.get('/deletetodo/',(req,res,next)=>{
         
             iduser = userid;
              res.render('todo',{obj,iduser}) ;
+        });
+    }
+    
+        
+ });
+ //Update Todo 
+app.post('/updatetodo/',(req,res,next)=>{
+    userid = req.query.id;
+    changed = req.body.name
+    if (req.query.id ){
+        
+        conn.query('SELECT user FROM todouser WHERE id= ?', [userid], function (error, results, fields) {
+            if(error)throw error ;
+            console.log(results) ;
+            obj = JSON.parse(results[0].user);
+            copyoftodolist = obj.todolist ;
+
+            app.get('/getindex',(reqq,ress)=>{    todoid = req.query.idtodo;  
+            
+                copyoftodolist.forEach(element => {
+                    if (element.id == todoid) {
+                        element.contenu = changed;
+                    }
+                });
+                obj.todolist= copyoftodolist ;
+            sendtodo =[JSON.stringify(obj)];
+            conn.query('UPDATE todouser SET user=? WHERE id= ?', [sendtodo,userid]);
+            console.log(sendtodo) ;
+
+            iduser = userid;
+            res.render('todo',{obj,iduser}) ;
+            }) ;  
+             
         });
     }
     

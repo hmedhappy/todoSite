@@ -57,9 +57,8 @@
 
     	</nav>
 
-        <!-- Page Content  -->
+        <!---------------------------- Page Content  -->
       <div id="content" class="p-4 p-md-5 pt-5">
-        
       <div class="container" style="padding-left: 0px; ">
           <div style="text-align: center;" class="col"> 
               <div  style="float: right;">
@@ -82,6 +81,7 @@
                       style=" margin-left: 1000px ; border-radius: 200px; ">Clear All</button>
               </div>
           </div>
+          <!---------------------------- TodoList -->
           <div class="row">
               <div class="col">
                   <table class="table">
@@ -94,39 +94,61 @@
                           </tr>
                       </thead>
                       <tbody>
-
-
                         <%  obj.todolist.forEach(todo => { %>
                           <% if (todo.status == true) { %>
                              <tr>
                                  <td><%= todo.id %></td>
                                  <td ><%= todo.contenu %></td>
                                  <td > <%= new Date %> </td>
-                                 <td> <% var d = i %> 
+                                 <td> 
                                  <a class="btn btn-success"method="post" href="/donetodo?id=<%=iduser%>&idtodo=<%=todo.id %>" >Terminer</a>                                     
-                                     <a  class="btn btn-warning mx-3"   data-toggle="modal"data-target="#exampleModall" data-whatever="@mdo" >Modifierrr </a>
+                                     <a type="button" class="btn btn-warning mx-3" data-toggle="modal" data-target=".bd-example-modal-lg" href="/getindex?idtodo=<%=todo.id %>"method="get">Modifierrr </a>
                                      <a class="btn btn-danger" method="post" href="/deletetodo?id=<%=iduser%>&idtodo=<%=todo.id %>">Supprimer</a> <!-- deleting a todo  -->
                                  </td>
                              </tr>
-                            
-                           <%} %>
-                         <%}) %>
-                      </tbody>
+                           <%} %>                        
+            <!---------------------------Change Modal-->
+            
+  
+                         <%}) %>  
+
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+    <div   div class="modal-content">
+        <div class="modal-body">
+            <form action="/addtodo?id=<%=iduser%>" method="post">
+                <div class="form-group">
+                    <label for="message-text" class="col-form-label">The ToDo is:</label>
+                    <input name="changedtodo"type="text" class="form-control" >
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-info" value="Register">Save
+                    </button>
+                </div>
+            </form>
+        </div>      ...
+    </div>
+  </div>
+</div>  
+
+                      </tbody> 
                   </table>
-                 
+                  <% k = obj.todolist.filter((todo)=>{return todo.status == true}) %> 
+                  <% if (k.length == 0) { %> 
+                    <div class="row" class="alert alert-warning">Aucun -ToDo- Disponible </div>
+                    <% } %> 
               </div>
           </div>
           <hr>
-          
-              
-      
+ <!------------------------------ DoneList -->
           <div class="row">
               <div class="col">
                   <h2>
                       DoneList
                   </h2>
               </div>
-      
           </div>
           <div class="row">
               <div class="col">
@@ -136,8 +158,6 @@
           </div>
           <div class="row">
               <div class="col">
-                  <div class="row" class="alert alert-warning">Aucun Done-ToDo Disponible </div>
-      
               <table class="table">
                   <thead>
                       <tr>
@@ -148,54 +168,31 @@
                       </tr>
                   </thead>
                   <tbody>
-                    <%  for (var i = 0; i < obj.todolist.length; i++) { %>
-                      <% if (obj.todolist[i].status == false) { %>
-                           <tr>
-                               <td><%= obj.todolist[i].id %></td>
-                               <td><%= obj.todolist[i].contenu %></td>
-                               <td> 13/09/1999 </td>
-                               <td> <button class="btn btn-success">Terminer</button>
-                                   <button type="button" class="btn btn-warning mx-3" data-toggle="modal" data-target="#exampleModal"
-                                       data-whatever="@mdo">Modifier </button>
-                                   <button class="btn btn-danger">Supprimer</button>
+                    <%  obj.todolist.forEach(todo => { %>
+                        <% if (todo.status == false) { %>
+                           <tr>       
+                               <td><%= todo.id %></td>
+                               <td ><%= todo.contenu %></td>
+                               <td > <%= new Date %> </td>
+                               <td>  
+                                   <a class="btn btn-danger" method="post" href="/deletetodo?id=<%=iduser%>&idtodo=<%=todo.id %>">Supprimer</a> <!-- deleting a todo  -->
                                </td>
                            </tr>
-                     <%} %>                           
-                   <%} %>
+                         <%} %>
+                         <%}) %>
                   </tbody>
               </table>
+              <% k = obj.todolist.filter((todo)=>{return todo.status == false}) %> 
+                  <% if (k.length == 0) { %> 
+                    <div class="row" class="alert alert-warning">Aucun -Done-ToDo- Disponible </div>
+                    <% } %> 
               </div>
           </div>
       </div>
       
-                                                <!--Change Modal-->
-      <div class="modal fade" id="exampleModall" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-          aria-hidden="true">
-          <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Change ToDo</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                      </button>
-                  </div>
-                  <div class="modal-body">
-                      <form action="/changetodo?id=<%=iduser%>?idtodo=faire(d) " method="post">
-                          <div class="form-group">
-                              <label for="message-text" class="col-form-label">The ToDo is:</label>
-                              <input name="changedtodo"  type="text" class="form-control" formControlName="todochanged">
-                          </div>
-                          <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <button class="btn btn-primary" type="submit">Save Changes</button>
-                          </div>
-                      </form>
-                  </div>
-              </div>
-          </div>
-      </div>
+      
 
-                                              <!--Change Modal-->
+<!---------------------------add Modal-->
       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
           aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -210,7 +207,7 @@
                       <form action="/addtodo?id=<%=iduser%>" method="post">
                           <div class="form-group">
                               <label for="message-text" class="col-form-label">The ToDo is:</label>
-                              <input name="todo" id="todo" type="text" class="form-control" formControlName="todo">
+                              <input name="todo" id="todo" type="text" class="form-control" >
                           </div>
       
                           <div class="modal-footer">
@@ -222,7 +219,7 @@
                   </div>
               </div>
           </div>
-      </div>      </div>
+      </div></div>
 		</div>
 
     <script src="js/jquery.min.js"></script>
