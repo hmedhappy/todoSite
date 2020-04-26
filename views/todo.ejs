@@ -94,21 +94,23 @@
                           </tr>
                       </thead>
                       <tbody>
-                        <%  for (var i = 0; i < obj.todolist.length; i++) { %>
-                          <% if (obj.todolist[i].status == true) { %>
+
+
+                        <%  obj.todolist.forEach(todo => { %>
+                          <% if (todo.status == true) { %>
                              <tr>
-                                 <td><%= obj.todolist[i].id %></td>
-                                 <td ><%= obj.todolist[i].contenu %></td>
+                                 <td><%= todo.id %></td>
+                                 <td ><%= todo.contenu %></td>
                                  <td > <%= new Date %> </td>
                                  <td> <% var d = i %> 
                                  <button onclick="faire('<%= d %>')" class="btn btn-success">Terminer</button>                                     
-                                     <button type="button" class="btn btn-warning mx-3" data-toggle="modal"data-target="#exampleModall" data-whatever="@mdo" onclick="'<%= todoid = d  %>'  " >Modifierr </button>
-                                     <button class="btn btn-danger">Supprimer</button>
+                                     <button type="button" class="btn btn-warning mx-3" data-toggle="modal"data-target="#exampleModall" data-whatever="@mdo" >Modifierr </button>
+                                     <a class="btn btn-danger" method="post" href="/deletetodo?id=<%=iduser%>&idtodo=<%=todo.id %>">Supprimer</a> <!-- deleting a todo  -->
                                  </td>
                              </tr>
                             
                            <%} %>
-                         <%} %>
+                         <%}) %>
                       </tbody>
                   </table>
                  
@@ -117,13 +119,8 @@
           <hr>
           
               
-          <script>
-            function faire(d){
-             return  d ;
-             
-        } 
-        </script>  
-              <%% j = faire() %>
+          
+              
          
       
           <div class="row">
@@ -174,7 +171,7 @@
           </div>
       </div>
       
-     
+                                                <!--Change Modal-->
       <div class="modal fade" id="exampleModall" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
           aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -186,25 +183,22 @@
                       </button>
                   </div>
                   <div class="modal-body">
-                      <form action="/changetodo?id=<%=iduser%>?idtodo='faire(d)' " method="post">
-      
+                      <form action="/changetodo?id=<%=iduser%>?idtodo=faire(d) " method="post">
                           <div class="form-group">
                               <label for="message-text" class="col-form-label">The ToDo is:</label>
                               <input name="changedtodo"  type="text" class="form-control" formControlName="todochanged">
                           </div>
-      
-      
                           <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                               <button class="btn btn-primary" type="submit">Save Changes</button>
                           </div>
                       </form>
                   </div>
-      
               </div>
           </div>
       </div>
-      
+
+                                              <!--Change Modal-->
       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
           aria-hidden="true">
           <div class="modal-dialog" role="document">
