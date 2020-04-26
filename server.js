@@ -7,7 +7,7 @@ var request = require('request');
 
 //view engine setup // var bodyParser = require('body-parser');
 app.use(express.static(path.join(__dirname, 'public')));
-app.set('view engine', 'ejs');
+app.set('view engine','ejs');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -20,19 +20,21 @@ var conn = mysql.createConnection({
     password: '',
     database: 'login'
 });
+
 //Connect
 conn.connect(function (err) {
     if (err) throw err;
     console.log("Connected to Database");
 });
+
 //router
 app.get('/',(req,res)=>{
    res.render('login');
-})
+});
+
 app.get('/sign',(req,res)=>{
     res.render('sign');
 });
-
 
 //undate a todo 
 app.get('/testtodo', (req, res) => {
@@ -91,10 +93,6 @@ app.post('/addtodo/',(req,res,next)=>{
         
  });
  
-
-
-
-
 //Authentification
 app.post('/auth', function (req, res) {
     let username = req.body.username;
@@ -116,8 +114,6 @@ app.post('/auth', function (req, res) {
         res.end();
     }
 });
-
-
 
 app.post('/register', function (req, res) {
     let username = req.body.username;
