@@ -131,11 +131,13 @@ app.post('/updatetodo/',(req,res,next)=>{
         
         conn.query('SELECT user FROM todouser WHERE id= ?', [userid], function (error, results, fields) {
             if(error)throw error ;
-            console.log(results) ;
             obj = JSON.parse(results[0].user);
             copyoftodolist = obj.todolist ;
 
-            app.get('/getindex',(reqq,ress)=>{    todoid = req.query.idtodo;  
+            app.get('/getindex',(reqq,ress,next)=>{    
+                
+                todoid = reqq.query.idtodo;  
+                
             
                 copyoftodolist.forEach(element => {
                     if (element.id == todoid) {
@@ -146,9 +148,12 @@ app.post('/updatetodo/',(req,res,next)=>{
             sendtodo =[JSON.stringify(obj)];
             conn.query('UPDATE todouser SET user=? WHERE id= ?', [sendtodo,userid]);
             console.log(sendtodo) ;
+            console.log("l id du todo est",todoid);
+
 
             iduser = userid;
             res.render('todo',{obj,iduser}) ;
+            ress.render('todo',{obj,iduser}) ;
             }) ;  
              
         });
