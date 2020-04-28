@@ -102,7 +102,7 @@
                                  <td > <%= new Date %> </td>
                                  <td> 
                                  <a class="btn btn-success"method="post" href="/donetodo?id=<%=iduser%>&idtodo=<%=todo.id %>" >Terminer</a>   <!-- Finishing a todo  -->                                  
-                                     <a class="btn btn-danger" method="post" href="/deletetodo?id=<%=iduser%>&idtodo=<%=todo.id %>">Supprimer</a> <!-- deleting a todo  -->
+                                     <a class="btn btn-danger" method="get" href="/deletetodo?id=<%=iduser%>&idtodo=<%=todo.id %>">Supprimer</a> <!-- deleting a todo  -->
                                  </td>
                              </tr>
                            <%} %>                        
@@ -163,7 +163,6 @@
               </div>
           </div>
       </div>
-      
       
 
 <!---------------------------add Modal-->

@@ -31,34 +31,11 @@ conn.connect(function (err) {
 app.get('/',(req,res)=>{
    res.render('login');
 });
-
 app.get('/sign',(req,res)=>{
     res.render('sign');
 });
-
-//undate a todo 
-app.get('/testtodo', (req, res) => {
-    let username = 2 ;
-    let id = 1;
-    let contenu = "j'ajoute un nouveau utilisateur avec son todo";
-    let description = "i am a new user with new todo"
-    let newTodo = {"id":id,"contenu":contenu,"description":description} ;
-
-    //getting req from DB
-
-    let sql=`SELECT user,id from todouser WHERE id=${id}`
-    let query = conn.query(sql,(err,result)=>{
-        if(err)throw err ; 
-        /* obj = JSON.parse(result[0].user) ;
-        console.log(obj);
-        console.log(obj.todolist); */
-       console.log(result[0].id);
-       
-
-        res.send('todo');
-    })
-
-    
+app.get('/auth',(req,res)=>{
+    res.render('todo');
 });
 
 //Adding Todo 
@@ -86,15 +63,12 @@ app.post('/addtodo/',(req,res,next)=>{
             
         
             iduser = userid;
-             res.render('todo',{obj,iduser}) ;
+             res.redirect('/auth');
         });
     }
     
         
  });
-
- 
-
 //Deleting Todo 
 app.get('/deletetodo/',(req,res,next)=>{
     userid = req.query.id;
@@ -117,7 +91,7 @@ app.get('/deletetodo/',(req,res,next)=>{
 
         
             iduser = userid;
-             res.render('todo',{obj,iduser}) ;
+             res.redirect('auth') ;
         });
     }
     
@@ -161,7 +135,6 @@ app.post('/updatetodo/',(req,res,next)=>{
     
         
  });
-
  //Done Todo 
 app.get('/donetodo/',(req,res,next)=>{
     userid = req.query.id;
@@ -188,14 +161,14 @@ app.get('/donetodo/',(req,res,next)=>{
 
         
             iduser = userid;
-             res.render('todo',{obj,iduser}) ;
+             res.redirect('/auth') ;
         });
     }
     
         
  });
 
- 
+
 //Authentification
 app.post('/auth', function (req, res) {
     let username = req.body.username;
@@ -206,18 +179,18 @@ app.post('/auth', function (req, res) {
                     obj = JSON.parse(results[0].user);
                     iduser = results[0].id;
                 
-                    res.render('todo',{obj,iduser})
+                    res.render('todo',{obj,iduser});
+                    
             } else {
                     res.send('Incorrect Username and/or Password!');
             }
-            res.end();
+            
         });
     } else {
         res.send('Please enter Username and Password!');
-        res.end();
     }
 });
-
+//Registeration
 app.post('/register', function (req, res) {
     let username = req.body.username;
     let password = req.body.password;
