@@ -11,15 +11,15 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "cookie-parser": "^1.4.5",
     "ejs": "^3.0.2",
     "express": "^4.17.1",
+    "moment": "^2.24.0",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.3",
     "path": "^0.12.7",
     "request": "^2.88.2",
-    "toaster-js": "^2.2.0"
+    "uuid": "^7.0.3"
   },
   "repository": {
     "type": "git",

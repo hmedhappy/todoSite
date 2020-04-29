@@ -87,7 +87,7 @@
                   <table class="table">
                       <thead >
                           <tr>
-                              <th >id</th>
+                             
                               <th >Description</th>
                               <th >Date d'ajout</th>
                               <th >Action</th>
@@ -97,9 +97,9 @@
                         <%  obj.todolist.forEach(todo => { %>
                           <% if (todo.status == true) { %>
                              <tr>
-                                 <td><%= todo.id %></td>
+                                
                                  <td ><%= todo.contenu %></td>
-                                 <td > <%= new Date %> </td>
+                                 <td > <%= todo.date %> </td>
                                  <td> 
                                  <a class="btn btn-success"method="post" href="/donetodo?id=<%=iduser%>&idtodo=<%=todo.id %>" >Terminer</a>   <!-- Finishing a todo  -->                                  
                                      <a class="btn btn-danger" method="get" href="/deletetodo?id=<%=iduser%>&idtodo=<%=todo.id %>">Supprimer</a> <!-- deleting a todo  -->
@@ -135,9 +135,10 @@
               <table class="table">
                   <thead>
                       <tr>
-                          <th>id</th>
+                        
                           <th>Description</th>
                           <th>Date d'ajout</th>
+                          <th>Date Fin</th>
                           <th>Action</th>
                       </tr>
                   </thead>
@@ -145,9 +146,11 @@
                     <%  obj.todolist.forEach(todo => { %>
                         <% if (todo.status == false) { %>
                            <tr>       
-                               <td><%= todo.id %></td>
+                               
                                <td ><%= todo.contenu %></td>
-                               <td > <%= new Date %> </td>
+                               <td > <%= todo.date %> </td>
+                               <td > <%= todo.datef %> </td>
+
                                <td>  
                                    <a class="btn btn-danger" method="post" href="/deletetodo?id=<%=iduser%>&idtodo=<%=todo.id %>">Supprimer</a> <!-- deleting a todo  -->
                                </td>

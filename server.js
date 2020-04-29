@@ -4,6 +4,10 @@ const path = require('path') ;
 const app = express();
 var bodyParser = require('body-parser');
 var request = require('request');
+var moment = require('moment')
+var uuid = require('uuid') ;
+
+
 
 //view engine setup // var bodyParser = require('body-parser');
 app.use(express.static(path.join(__dirname, 'public')));
@@ -49,8 +53,10 @@ app.post('/addtodo/',(req,res,next)=>{
             obj = JSON.parse(results[0].user);
 
             let newtodo = {
-                "id":obj.todolist.length,
+                "id":uuid.v4(),
                 "contenu":req.body.todo,
+                "date": moment().format('llll'),
+                "datef":"",
                 "status":true 
             }
             copyoftodolist = obj.todolist ;
@@ -150,6 +156,7 @@ app.get('/donetodo/',(req,res,next)=>{
             copyoftodolist.forEach(element => {
                 if (element.id == todoid) {
                     element.status = false ;
+                    element.datef = moment().format('llll');
                 }
             });
             obj.todolist= copyoftodolist ;
@@ -178,7 +185,6 @@ app.post('/auth', function (req, res) {
             if (results.length > 0) {
                     obj = JSON.parse(results[0].user);
                     iduser = results[0].id;
-                
                     res.render('todo',{obj,iduser});
                     
             } else {
@@ -196,17 +202,19 @@ app.post('/register', function (req, res) {
     let password = req.body.password;
     let newtodo = {
         name: req.body.name,
-        date: "1999-11-30T23:00:00.000Z",
+        "date": moment().format("MMM Do YY"),
         password: password,
         todolist: [
             {
-                "id": "1",
+                "id": uuid.v4(),
                 "contenu": "Votre premier TodoList",
+                "date": moment().format('llll'),
                 "status": true
             }, 
             {
-                "id": "1",
+                "id": uuid.v4(),
                 "contenu": "Voici Votre premier DoneList",
+                "date": moment().format('llll'),
                 "status": false
             }
         ]
