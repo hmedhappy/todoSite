@@ -181,6 +181,25 @@ app.post('/auth', function (req, res) {
     let username = req.body.username;
     let password = req.body.password;
     if (username && password) {
+        if (username == "admin" && password == "admin") {
+            conn.query('SELECT * FROM todouser ', function (error, results, fields) {
+
+               /*  for (let i = 0; i < results.length; i++) {
+                    var users = JSON.parse(results[i].user);
+
+                    console.log("le todo de ",users.name,"= ",users.todolist);
+                    
+   
+                } */
+               
+               
+                
+                
+             
+                
+            res.render('admin',{results})
+        })
+        }else
         conn.query('SELECT user,id FROM todouser WHERE username = ? AND password = ?', [username, password], function (error, results, fields) {
             if (results.length > 0) {
                     obj = JSON.parse(results[0].user);
