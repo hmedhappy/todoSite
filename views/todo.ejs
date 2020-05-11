@@ -94,7 +94,7 @@
                       </thead>
                       <tbody>
                         <%  obj.todolist.forEach(todo => { %>
-                          <% if (todo.status == true) { %>
+                          <% if (todo.status == false) { %>
                              <tr>
                                 
                                  <td ><%= todo.contenu %></td>
@@ -108,7 +108,7 @@
                          <%}) %>  
                       </tbody> 
                   </table>
-                  <% k = obj.todolist.filter((todo)=>{return todo.status == true}) %> 
+                  <% k = obj.todolist.filter((todo)=>{return todo.status == false}) %> 
                   <% if (k.length == 0) { %> 
                     <div class="row" class="alert alert-warning">Aucun -ToDo- Disponible </div>
                     <% } %> 
@@ -143,7 +143,7 @@
                   </thead>
                   <tbody>
                     <%  obj.todolist.forEach(todo => { %>
-                        <% if (todo.status == false) { %>
+                        <% if (todo.status == true) { %>
                            <tr>       
                                
                                <td ><%= todo.contenu %></td>
@@ -158,7 +158,7 @@
                          <%}) %>
                   </tbody>
               </table>
-              <% k = obj.todolist.filter((todo)=>{return todo.status == false}) %> 
+              <% k = obj.todolist.filter((todo)=>{return todo.status == true}) %> 
                   <% if (k.length == 0) { %> 
                     <div class="row" class="alert alert-warning">Aucun -Done-ToDo- Disponible </div>
                     <% } %> 

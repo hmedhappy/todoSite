@@ -57,7 +57,7 @@ app.post('/addtodo/',(req,res,next)=>{
                 "contenu":req.body.todo,
                 "date": moment().format('llll'),
                 "datef":"",
-                "status":true 
+                "status":false 
             }
             copyoftodolist = obj.todolist ;
             copyoftodolist.push(newtodo);
@@ -155,7 +155,7 @@ app.get('/donetodo/',(req,res,next)=>{
             copyoftodolist = obj.todolist ;
             copyoftodolist.forEach(element => {
                 if (element.id == todoid) {
-                    element.status = false ;
+                    element.status = true ;
                     element.datef = moment().format('llll');
                 }
             });
