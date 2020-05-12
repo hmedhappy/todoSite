@@ -16,8 +16,7 @@ app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-//Create Connection
-//Configuratiion
+//Create Connection 
 var conn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -177,9 +176,11 @@ app.get('/donetodo/',(req,res,next)=>{
 
  // Get projects
  app.get('/projects', function (req, res) {
-    conn.query('SELECT id,project FROM todouser ', function (error, results, fields) {
+    conn.query('SELECT project,members FROM projects ', function (error, results, fields) {
+        //Showing Members of the project ARRAY
+       console.log(results);
+       
          
-         console.log(results);
          
      res.render('projet',{results})
  })

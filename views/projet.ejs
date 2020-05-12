@@ -78,16 +78,30 @@
 
                 
             <!--Fetching the DATA from results -->
-                    <%  results.forEach(element => {  %>
-                        <%  /* var users = JSON.parse(element.user);  */ %>
+            <%   results.forEach(element => {   %>
 
-                        <div id="mydiv" class="column">
-                            <div class="card">
-                                <img src="avatar.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-                                <br><h3 style="left: 48%; top: 15%;position: absolute;"><%=  element.project  %><br><h3></h3>
-                        </div>
-                    </div> 
-                    <%  });  %>               
+                <div id="mydiv" class="column">
+                    <div class="card">
+                        <br><h3 style="left: 48%; top: 15%;position: absolute;"><%=   element.project   %><br>
+                            <ul style="left: -86%;top: 148%;position: absolute;list-style-type: none;">
+                                <% for (let i = 0; i < element.members.split(', ').length; i++) { %>
+                                    <li> <img src="avatar.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+                                    <h4> <%= element.members.split(', ')[i] %> </h4></li>
+                            <% } %> 
+                            </ul>
+                </div>
+            </div><div id="mydiv" class="column">
+                <div class="card">
+                    <br><h3 style="left: 48%; top: 15%;position: absolute;"><%=   element.project   %><br>
+                        <ul style="left: -86%;top: 148%;position: absolute;list-style-type: none;">
+                            <% for (let i = 0; i < element.members.split(', ').length; i++) { %>
+                                <li> <img src="avatar.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+                                <h4> <%= element.members.split(', ')[i] %> </h4></li>
+                        <% } %> 
+                        </ul>
+            </div>
+        </div>
+                    <%   });   %>               
                 </div>
         </div>
       <style>
