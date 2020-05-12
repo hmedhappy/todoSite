@@ -175,6 +175,17 @@ app.get('/donetodo/',(req,res,next)=>{
         
  });
 
+ // Get projects
+ app.get('/projects', function (req, res) {
+    conn.query('SELECT id,project FROM todouser ', function (error, results, fields) {
+         
+         console.log(results);
+         
+     res.render('projet',{results})
+ })
+
+ });
+
 
 //Authentification
 app.post('/auth', function (req, res) {
@@ -184,19 +195,6 @@ app.post('/auth', function (req, res) {
         if (username == "admin" && password == "admin") {
             conn.query('SELECT * FROM todouser ', function (error, results, fields) {
 
-               /*  for (let i = 0; i < results.length; i++) {
-                    var users = JSON.parse(results[i].user);
-
-                    console.log("le todo de ",users.name,"= ",users.todolist);
-                    
-   
-                } */
-               
-               
-                
-                
-             
-                
             res.render('admin',{results})
         })
         }else
@@ -219,6 +217,7 @@ app.post('/auth', function (req, res) {
 app.post('/register', function (req, res) {
     let username = req.body.username;
     let password = req.body.password;
+    let project = req.body.project;
     let newtodo = {
         name: req.body.name,
         "date": moment().format("MMM Do YY"),
@@ -240,7 +239,7 @@ app.post('/register', function (req, res) {
     } ;
     json = JSON.stringify(newtodo);
     // Adding the new user in the database ;
-     conn.query('INSERT INTO todouser VALUES (?,?,?,?)', [,username, password ,json]) ;
+     conn.query('INSERT INTO todouser VALUES (?,?,?,?,?)', [,username, password ,json,project]) ;
 
 
          let sql = `SELECT user,id FROM todouser WHERE username = '${username}' AND password = '${password}'`
