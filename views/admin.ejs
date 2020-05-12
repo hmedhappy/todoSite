@@ -79,25 +79,25 @@
 
        
 <!--Fetching the DATA from results -->
-
+<% var totaldone= 0  ;var totaltodo = 0 %> 
         <% results.forEach(element => {  %>
                <% var users = JSON.parse(element.user);  %>
 
             <div id="mydiv" class="column">
                 <div class="card">
                   <img src="avatar.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-                  <% var done = 0 ;var todo = 0 %>
+                  <% var done = 0 ;var todo = 0  ;%>
                   <br><h3 style="left: 48%; top: 15%;position: absolute;"><%= element.username %><br><h3></h3>
                   <ul>
                   <%  users.todolist.forEach(element => { %>
                     <% if (element.status == true) { %>
-                        <% done++  ; %>
+                        <% done++  ; totaldone++ %>
                        <label class="container" style="font-size: initial;"><%=element.contenu%>
                             <input type="checkbox" checked="checked">
                             <span class="checkmark"></span>
                         </label> 
                         <% }else{ %>
-                            <% todo++  ; %>
+                            <% todo++  ; totaltodo++ %>
                             <label class="container" style="font-size: initial;"><%=element.contenu%>
                             <input type="checkbox" >
                             <span class="checkmark"></span>
@@ -107,12 +107,14 @@
                   <!-- En cas ou le pourcentage est NaN -->
                   <% if (done+todo == 0) { todo = 1 ; } %>
                 <!--Affichage du porcentage -->
-                  <h6 style="position: absolute;left: 67%;top: 4%;">Finished = <%= (done*100/(done+todo)).toFixed(0)%>%</h6>
-                </ul>
+                <h6 style="position: absolute;left: 67%;top: 4%;">Completed = <%= (done*100/(done+todo)).toFixed(0)%>%</h6>
+              </ul>
 
-                </div>
-              </div> 
-            <% }); %> 
+            </div>
+          </div> 
+        <% }); %> 
+                <h6 style="position: absolute;left: 40%;top: 18%;font-weight: 800;font-size: xx-large;">Project Completed: <%= (totaldone*100/(totaldone+totaltodo)).toFixed(0)%>%</h6>
+              
       <!--End of Fetching the DATA from results -->
       </div>
       </div>
