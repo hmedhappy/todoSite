@@ -204,27 +204,27 @@ app.get('/donetodo/',(req,res,next)=>{
 
 
 //Authentification
-app.post('/auth', function (req, res) {
+app.post('/auth',  async function (req, res) {
     let username = req.body.username;
     let password = req.body.password;
     if (username && password) {
         if (username == "admin" && password == "admin") {
-            conn.query('SELECT * FROM todouser ', function (error, results, fields) {
-
+            //conn.query('SELECT * FROM todouser ', function (error, results, fields) {
             res.render('admin',{results})
-        })
+       // })
         }else
-        conn.query('SELECT user,id FROM todouser WHERE username = ? AND password = ?', [username, password], function (error, results, fields) {
-            if (results.length > 0) {
-                    obj = JSON.parse(results[0].user);
-                    iduser = results[0].id;
+       // conn.query('SELECT user,id FROM todouser WHERE username = ? AND password = ?', [username, password], function (error, results, fields) {
+           var userdata = await User.findOne({username:username,password:password}) ;
+                if (userdata) {
+                    obj = userdata.user;
+                    iduser = userdata.id;
                     res.render('todo',{obj,iduser});
                     
             } else {
                     res.send('Incorrect Username and/or Password!');
             }
             
-        });
+        //});
     } else {
         res.send('Please enter Username and Password!');
     }
@@ -265,7 +265,6 @@ app.post('/register', async  (req, res) =>{
         const saveduser = await user.save();
         console.log('User Inserted...');
         const userdata = await User.findOne({username:username}) ;
-        console.log('the user data : ',userdata);
         var obj = userdata.user;
         var iduser = userdata.id;
         res.render('todo', { obj, iduser })
@@ -275,8 +274,6 @@ app.post('/register', async  (req, res) =>{
 
     
     //conn.query('INSERT INTO todouser VALUES (?,?,?,?,?)', [,username, password ,json,project]) ;
-
-
         // let sql = `SELECT user,id FROM todouser WHERE username = '${username}' AND password = '${password}'`
         /*   var query = conn.query(sql, (err, result) => {
             if (err) throw err;
