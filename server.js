@@ -2,10 +2,25 @@ const express = require('express');
 const mysql = require('mysql');
 const path = require('path') ;
 const app = express();
+var User = require('./models/User') ;
+var router = express.Router();
 var bodyParser = require('body-parser');
 var request = require('request');
 var moment = require('moment')
 var uuid = require('uuid') ;
+
+const mongoose = require('mongoose');
+//Connect To DB
+mongoose.connect(
+    'mongodb+srv://hmedhappy:karirinkute@0@cluster0-acekd.mongodb.net/hmidb?retryWrites=true&w=majority',
+    { useNewUrlParser: true, useUnifiedTopology: true ,useCreateIndex: true},
+    ()=>{
+    console.log('Connected To HmiDB');
+    
+});
+require('dotenv/config');
+
+
 
 
 
@@ -16,7 +31,7 @@ app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-//Create Connection 
+/* //Create Connection 
 var conn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -28,7 +43,7 @@ var conn = mysql.createConnection({
 conn.connect(function (err) {
     if (err) throw err;
     console.log("Connected to Database");
-});
+}); */
 
 //router
 app.get('/',(req,res)=>{
@@ -215,7 +230,8 @@ app.post('/auth', function (req, res) {
     }
 });
 //Registeration
-app.post('/register', function (req, res) {
+app.post('/register', async  (req, res) =>{
+    //preparing DATA to Database
     let username = req.body.username;
     let password = req.body.password;
     let project = req.body.project;
@@ -224,7 +240,7 @@ app.post('/register', function (req, res) {
         "date": moment().format("MMM Do YY"),
         password: password,
         todolist: [
-            {
+             {
                 "id": uuid.v4(),
                 "contenu": "Votre premier TodoList",
                 "date": moment().format('llll'),
@@ -235,16 +251,34 @@ app.post('/register', function (req, res) {
                 "contenu": "Voici Votre premier DoneList",
                 "date": moment().format('llll'),
                 "status": false
-            }
+            } 
         ]
-    } ;
-    json = JSON.stringify(newtodo);
+    } 
     // Adding the new user in the database ;
-     conn.query('INSERT INTO todouser VALUES (?,?,?,?,?)', [,username, password ,json,project]) ;
+    const user = new User({
+        username : username,
+        password : password,
+        user : newtodo,
+        project : project
+    });
+    try {
+        const saveduser = await user.save();
+        console.log('User Inserted...');
+        const userdata = await User.findOne({username:username}) ;
+        console.log('the user data : ',userdata);
+        var obj = userdata.user;
+        var iduser = userdata.id;
+        res.render('todo', { obj, iduser })
+    } catch (err) {
+        res.json({message : err});
+    }
+
+    
+    //conn.query('INSERT INTO todouser VALUES (?,?,?,?,?)', [,username, password ,json,project]) ;
 
 
-         let sql = `SELECT user,id FROM todouser WHERE username = '${username}' AND password = '${password}'`
-          var query = conn.query(sql, (err, result) => {
+        // let sql = `SELECT user,id FROM todouser WHERE username = '${username}' AND password = '${password}'`
+        /*   var query = conn.query(sql, (err, result) => {
             if (err) throw err;
     
              var obj = JSON.parse(result[0].user);
@@ -254,9 +288,30 @@ app.post('/register', function (req, res) {
     obj = JSON.parse(result[0].user);
     iduser = result[0].id;
     res.render('todo', { obj, iduser })
-}); 
+});  */
 
 });
+
+//Test MongoDb 
+
+
+app.post('/mongo',(req,res)=>{
+
+    var newuser = new User();
+    newuser.username = 'vraiment';
+    newuser.password = 'vrm pass';
+    newuser.user = 'vraiment test' ;
+    newuser.project = 'vrim project' ;
+
+    newuser.save(function(err, savedUser){
+        if(err){
+            console.log(err);
+            return res.status(500).send('mch bon');
+        
+        }
+        return res.status(200).send('c bonnnnnnnn');
+    })
+})
 
 
 
