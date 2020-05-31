@@ -9,27 +9,7 @@
 
 <body>
    
-    
-<ul>
-      <li>  <h1> PSEUDO = <%= obj.name  %> </h1> </li>
-    <li> <h1> Birthday = <%= obj.date  %> </h1> </li>
-    <li>   <h1> Password = <%= obj.password  %> </h1> </li>
-                <li>
-                    <h1>LES TODOS</h1>
-                </li>
-
-        <%  for (var i = 0; i < obj.todolist.length; i++) { %>
-            <br>
-            <ul>
-                <h1>utilisateur numero <%= i+1 %> </h1>
-                        <li> <h2> La TodoList = <%= obj.todolist[i].id %> </h2> </li>
-                        <li> <h2> La Contenu = <%= obj.todolist[i].contenu %> </h2></li>
-                        <li>  <h2> La Status = <%= obj.todolist[i].status %> </h2></li>
-                         <br><br>
-            </ul>
-        <%} %> 
-
-</ul>
+hello <%= userdata.project %> 
 </body>
 
 </html>

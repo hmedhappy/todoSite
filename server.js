@@ -1,18 +1,21 @@
-const express = require('express');
+
 const mysql = require('mysql');
 const path = require('path') ;
+
+const express = require('express');
 const app = express();
-var User = require('./models/User') ;
 var router = express.Router();
+
+
+var User = require('./models/User') ;
 var bodyParser = require('body-parser');
-var request = require('request');
-var moment = require('moment')
+var moment = require('moment');
 var uuid = require('uuid') ;
 
 const mongoose = require('mongoose');
 //Connect To DB
 mongoose.connect(
-    'mongodb+srv://hmedhappy:karirinkute@0@cluster0-acekd.mongodb.net/hmidb?retryWrites=true&w=majority',
+    'mongodb+srv://hmedhappy:karirinkute@0@cluster0-qgvyy.mongodb.net/todoDB?retryWrites=true&w=majority',
     { useNewUrlParser: true, useUnifiedTopology: true ,useCreateIndex: true},
     ()=>{
     console.log('Connected To HmiDB');
@@ -52,39 +55,43 @@ app.get('/',(req,res)=>{
 app.get('/sign',(req,res)=>{
     res.render('sign');
 });
-app.get('/auth',(req,res)=>{
-    res.render('todo');
-});
+ app.get('/user', async (req,res)=>{
+    const idd = req.query.id ;
+    const userdata = await User.findOne({_id:idd})
+    const obj = userdata.user;
+   iduser = idd;
+   //localStorage.setItem('token','tokenn');    
+   res.render('todo',{obj,iduser}); 
+
+}); 
 
 //Adding Todo 
-app.post('/addtodo/',(req,res,next)=>{
+app.post('/addtodo/', async (req,res,next)=>{
     userid = req.query.id;
     if (req.query.id ){
         
-        conn.query('SELECT user FROM todouser WHERE id= ?', [userid], function (error, results, fields) {
-            if(error)throw error ;
-            console.log(results) ;
-            obj = JSON.parse(results[0].user);
+/*         conn.query('SELECT user FROM todouser WHERE id= ?', [userid], function (error, results, fields) {
+ */            var userdata = await User.findOne({_id:userid}) ;
+        obj = userdata.user;
+        let newtodo = {
+            "id":uuid.v4(),
+            "contenu":("oui ",req.body.todo),
+            "date": moment().format('llll'),
+            "datef":"",
+            "status":false 
+        }
+        copyoftodolist = obj.todolist ;
+        copyoftodolist.push(newtodo);
+        obj.todolist= copyoftodolist ;
+        userdata.user = obj ;
+        userdata.save();
 
-            let newtodo = {
-                "id":uuid.v4(),
-                "contenu":req.body.todo,
-                "date": moment().format('llll'),
-                "datef":"",
-                "status":false 
-            }
-            copyoftodolist = obj.todolist ;
-            copyoftodolist.push(newtodo);
-            obj.todolist= copyoftodolist ;
-            sendtodo =[JSON.stringify(obj)];
-
-            conn.query('UPDATE todouser SET user=? WHERE id= ?', [sendtodo,userid]);
-
-            
-        
             iduser = userid;
              res.redirect('/auth');
-        });
+/*         });
+ */
+      
+
     }
     
         
@@ -217,8 +224,9 @@ app.post('/auth',  async function (req, res) {
            var userdata = await User.findOne({username:username,password:password}) ;
                 if (userdata) {
                     obj = userdata.user;
-                    iduser = userdata.id;
-                    res.render('todo',{obj,iduser});
+                    iduser = userdata._id;
+                    // res.render('todo',{obj,iduser});
+                    res.redirect(`/user/?id=${iduser}`);
                     
             } else {
                     res.send('Incorrect Username and/or Password!');
@@ -266,8 +274,8 @@ app.post('/register', async  (req, res) =>{
         console.log('User Inserted...');
         const userdata = await User.findOne({username:username}) ;
         var obj = userdata.user;
-        var iduser = userdata.id;
-        res.render('todo', { obj, iduser })
+        var iduser = userdata._id;
+        res.redirect(`/user/?id=${iduser}`);
     } catch (err) {
         res.json({message : err});
     }
@@ -290,8 +298,6 @@ app.post('/register', async  (req, res) =>{
 });
 
 //Test MongoDb 
-
-
 app.post('/mongo',(req,res)=>{
 
     var newuser = new User();
